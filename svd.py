@@ -20,10 +20,7 @@ def SVD(df, dimension):
 	'''
 
 	U, Sigma, VT = randomized_svd(data, n_components=dimension)
-	print(U.shape)
-	print(Sigma.shape)
-	print(VT.shape)
-	sys.exit()
+	
 	output_U = pd.concat([labels, pd.DataFrame(U)], axis=1, ignore_index=True)
 	print(output_U.shape)
 	name = 'data/'+str(dimension)+'d_U_mnist_test.csv'
