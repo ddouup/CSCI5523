@@ -1,0 +1,43 @@
+\documentclass[a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+
+\title{CSCI5523 Assignment 1 Answer}
+\author{Daihui DOU\qquad ddou00005@umn.edu\qquad 5514178 }
+
+\begin{document}
+
+\maketitle
+
+\section{Question1(From Text Book Chapter 2.)}
+\subsection{Q3}
+(a) The boss is right. The satisfaction should be measured by (number of complaints)/(number of sold products)
+\\(b) The original product satisfaction attribute type is meaningless because even if the best-selling products has the most complaints, it may still have a very low complaint ratio.
+\subsection{Q4}
+(a) The marketing director is in trouble. His approach does not work if, for example, a customer prefer 1 to 2, 2 to 3 and 3 to 1.
+\\(b) A possible solution is to have customers compare only 1 and 2, then 2 and 3. In general, it's difficult to create an ordinal measurement scale based on pairwise comparisons because customers' inconsistent.
+\\(c) The product's average can't be directly computed from rankings because it's a ordinal scale instead of interval or ratio. Another possible approach could be computing its median value. 
+\subsection{Q7}
+Daily temperature is likely to show more temporal auto-correlation because the temperature between consecutive days tends to be more similar than rainfall, considering that rainfall is much more capricious.
+\subsection{Q9}
+Observational science have issues to deal with the quality of data since the observed data may contain noise and error, which is similar to what we do in data mining. By contrast, experimental science has less problem with data quality.
+\subsection{Q15}
+The (a) sampling scheme make sure each group in sample data has the same ratio as that in original data, while the (b) sampling scheme does not.
+\subsection{Q16}
+(a)If a term occurs in one document then the idf will be maximum, which is tf*log(m). If a term occurs in every document, idf will be zero.
+\\(b) The transformation reflects each term's real weight,i.e., a term appears in many documents has low weight to distinguish them, while that appears in few documents have high weight.
+\subsection{Q18}
+(a) Hamming distance = 3
+\par Jaccard similarity = 2/(10-5) = 0.4
+\\(b)Hamming distance is more similar to the Simple Matching Coefficient, since SMC = Hamming/(number of digits). Jaccard similarity is more similar to the cosine measure because neither of them count 0-0 matches.
+\\(c)Jaccard similarity is more appropriate because it measures the same gene.
+\\(d)I would use Hamming distance because human beings share > 99.9\% of the same genes so we should measure the difference using Hamming distance.
+\subsection{Q27}
+
+\section{Question 2}
+Construct a $N \times N$ matrix M for clustering where $M_{ij}$ represents the similarity value between object i and object j.
+\section{Question 3}
+
+\section{Question 4}
+\section{Question 5}
+\end{document}

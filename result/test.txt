@@ -1,0 +1,8 @@
+Processing data: data/test.csv...
+Data Size: (12, 785)
+
+Result using Euclidean Distance:4
+Result using Cosine Similarity:4
+Result using Jaccard Similarity:4
+
+Time consumed:0.034056901931762695

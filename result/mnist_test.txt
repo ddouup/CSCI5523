@@ -1,0 +1,8 @@
+Processing data: data/mnist_test.csv...
+Data Size: (10000, 785)
+
+Result using Euclidean Distance:9558
+Result using Cosine Similarity:9614
+Result using Jaccard Similarity:9601
+
+Time consumed:983.6086549758911

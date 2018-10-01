@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-import sys
+import os, time
 from sklearn.metrics.pairwise import euclidean_distances, cosine_similarity
 from scipy.spatial.distance import pdist, squareform
 
@@ -13,72 +13,66 @@ def Cosine_Similarity(a,b):
 
 
 def Jaccard_Similarity(a,b):
-	return np.dot(a,b)/(np.linalg.norm(a)**2+np.linalg.norm(b)**2-np.dot(a, b))
+	return 1-np.dot(a,b)/(np.linalg.norm(a)**2+np.linalg.norm(b)**2-np.dot(a, b))
 
 
-def findCloset(array):
-	for i in range(array.shape[0]):
-		array[i][i] = 1
+def countSameDigit(distance, df):
+	for i in range(distance.shape[0]):
+		distance[i][i] = 1
 
-	print(array)
-	return np.argmin(array, axis=1)
+	array = np.argmin(distance, axis=1)
 
+	#print(array)
 
-
-def countSameDigit(array, data):
 	count = 0
 
 	for i in range(array.size):
-		if data.iloc[i,0] == data.iloc[array[i],0]:
-			#print()
-			#print('Image',i,'digit:', data.iloc[i,0])
-			#print('Image',array[i],'digit:', data.iloc[array[i],0])
-			#print('Bingo!')
+		print('Image'+str(i)+"'s digit:"+str(df.iloc[i,0]))
+		print('Closet Image: '+str(array[i])+' Digit:'+str(df.iloc[array[i],0]))
+		print()
+		if df.iloc[i,0] == df.iloc[array[i],0]:
+			print('Bingo!!!!!!!!!!!!!!!!!')
+			print()
 			count+=1
+		else:
+			print('Woopsssssssss')
+			print()
 
 	return count
 
 
 
-def main():
-	df = pd.read_csv('data/mnist_test.csv', header=None)
+def process(filename):
+	start = time.time()
 
-	size = df.index.size
-	print('Total data: ',size)
+	output_file = 'result/'+os.path.splitext(os.path.basename(filename))[0]+'.txt'
+	
+	print("Processing data: ",filename, "...")
+	print('Store to: ',output_file)
+
+	text_file = open(output_file, "w")
+	text_file.write('Processing data: '+filename+'...\n')
+
+	df = pd.read_csv(filename, header=None)
+
+	shape = df.shape
+	text_file.write('Data Size: '+str(shape)+'\n\n')
+	print('Data Size: ',shape)
 
 	data = df.iloc[:,1:].values
 	
-	EuclideanDistance = np.ones((size, size))
-	CosineDistance = np.ones((size, size))
-	JaccardDistance = np.ones((size, size))
-
-	'''
-	for i in range(size):
-		for j in range(size):
-			print('row: ',i,', columm: ',j)
-
-			if i < j:
-				EuclideanDistance[i][j] = Euclidean_Distance(data[i][1::], data[j][1::])/10000
-				CosineDistance[i][j] = 1-Cosine_Similarity(data[i][1::], data[j][1::])
-				JaccardDistance[i][j] = 1-Jaccard_Similarity(data[i][1::], data[j][1::])
-			else:
-				EuclideanDistance[i][j] = EuclideanDistance[j][i]
-				CosineDistance[i][j] = CosineDistance[j][i]
-				JaccardDistance[i][j] = JaccardDistance[j][i]
-			
-			print('Euclidean Distance: ', EuclideanDistance[i][j])
-			print('Cosine Distance: ', CosineDistance[i][j])
-			print('Jaccard Distance: ', JaccardDistance[i][j])
-	'''
+	EuclideanDistance = np.ones((shape[0], shape[0]))
+	CosineDistance = np.ones((shape[0], shape[0]))
+	JaccardDistance = np.ones((shape[0], shape[0]))
 
 	#EuclideanDistance = euclidean_distances(data, data)/10000
 	#CosineDistance = 1-cosine_similarity(data, data)
 
 	EuclideanDistance = squareform(pdist(data, 'euclidean'))/10000
 	CosineDistance = squareform(pdist(data, 'cosine'))
-	JaccardDistance = squareform(pdist(data, 'jaccard'))
+	JaccardDistance = squareform(pdist(data, Jaccard_Similarity))
 
-
+	'''
 	print('Euclidean: ')
 	print(EuclideanDistance)
 
@@ -87,33 +81,35 @@ def main():
 
 	print('Jaccard: ')
 	print(JaccardDistance)
-
 	'''
-	output = pd.DataFrame(EuclideanDistance)
-	output.to_csv("a_Euclidean_Distance.csv", header=False, index=False)
+	result_euclidean = countSameDigit(EuclideanDistance, df)
+	result_cosine = countSameDigit(CosineDistance, df)
+	result_jaccard = countSameDigit(JaccardDistance, df)
+
+	text_file.write('Result using Euclidean Distance:'+str(result_euclidean)+'\n')
+	text_file.write('Result using Cosine Similarity:'+str(result_cosine)+'\n')
+	text_file.write('Result using Jaccard Similarity:'+str(result_jaccard)+'\n')
+
+	end = time.time()
+	text_file.write('\nTime consumed:'+str(end-start))
+	text_file.close()
+
+
+def main():
+	process("data/test.csv")
 	
-	output = pd.DataFrame(CosineDistance)
-	output.to_csv("a_Cosine_Distance.csv", header=False, index=False)
+	process("data/mnist_test.csv")
 
-	output = pd.DataFrame(JaccardDistance)
-	output.to_csv("a_Jaccard_Distance.csv", header=False, index=False)
+	mylist = [5, 10, 20, 40]
+	for i in mylist:
+		filename = 'data/'+str(i)+'d_U_mnist_test.csv'
+		process(filename)
+		filename = 'data/'+str(i)+'d_U*Sigma_mnist_test.csv'
+		process(filename)
 
-	print('Distance saved.')
-	'''
-
-	EuclideanDistance_closet = findCloset(EuclideanDistance)
-	CosineSimilarity_closet = findCloset(CosineDistance)
-	JaccardSimilarity_closet = findCloset(JaccardDistance)
-
-	print(EuclideanDistance_closet)
-	print(CosineSimilarity_closet)
-	print(JaccardSimilarity_closet)
-
-	print('Result using Euclidean Distance:', countSameDigit(EuclideanDistance_closet, df))
-	print('Result using Cosine Similarity:', countSameDigit(CosineSimilarity_closet, df))
-	print('Result using Jaccard Similarity:', countSameDigit(JaccardSimilarity_closet, df))
-
-
+	process('data/7*7_mnist_test.csv')
+	
+	print('All finished')
 
 if __name__ == '__main__':
 	main()

@@ -1,0 +1,8 @@
+Processing data: data/40d_U*Sigma_mnist_test.csv...
+Data Size: (10000, 41)
+
+Result using Euclidean Distance:9630
+Result using Cosine Similarity:9690
+Result using Jaccard Similarity:9647
+
+Time consumed:482.30477929115295
