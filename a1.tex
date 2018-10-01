@@ -1,6 +1,7 @@
 \documentclass[a4paper]{article}
 \usepackage[margin=1in]{geometry}
 \usepackage[utf8]{inputenc}
+\usepackage{hyperref}
 
 \title{CSCI5523 Assignment 1 Answer}
 \author{Daihui DOU\qquad ddou00005@umn.edu\qquad 5514178 }
@@ -31,13 +32,94 @@ The (a) sampling scheme make sure each group in sample data has the same ratio a
 \par Jaccard similarity = 2/(10-5) = 0.4
 \\(b)Hamming distance is more similar to the Simple Matching Coefficient, since SMC = Hamming/(number of digits). Jaccard similarity is more similar to the cosine measure because neither of them count 0-0 matches.
 \\(c)Jaccard similarity is more appropriate because it measures the same gene.
-\\(d)I would use Hamming distance because human beings share > 99.9\% of the same genes so we should measure the difference using Hamming distance.
+\\(d)I would use Hamming distance because human beings share $> 99.9\%$ of the same genes so we should measure the difference using Hamming distance.
 \subsection{Q27}
-
+1(a). $\forall \mathbf{x},\mathbf{y},0\leq \cos(\mathbf{x},\mathbf{y})\leq 1$, so $d(\mathbf{x},\mathbf{y})\geq 0 $ 
+\\1(b). $d(\mathbf{x},\mathbf{y}) = \arccos(1) = 0$
+\\2. $d(\mathbf{x},\mathbf{y}) = \arccos(\cos(\mathbf{x},\mathbf{y})) = \arccos(\cos(\mathbf{y},\mathbf{x})) = d(\mathbf{y},\mathbf{x})$
+\\3. If $\mathbf{x}$, $\mathbf{y}$ and $\mathbf{z}$ are in the same plane, then obviously $d(\mathbf{x},\mathbf{z}) < d(\mathbf{x},\mathbf{y})+d(\mathbf{y},\mathbf{z})$. It they are not in the same plane, let $\mathbf{y'}$ be the projection of $\mathbf{y}$ in $\mathbf{x}-\mathbf{z}$ plane, then $d(\mathbf{x},\mathbf{z}) < d(\mathbf{x},\mathbf{y'})+d(\mathbf{y'},\mathbf{z}) < d(\mathbf{x},\mathbf{y})+d(\mathbf{y},\mathbf{z}))$.
 \section{Question 2}
 Construct a $N \times N$ matrix M for clustering where $M_{ij}$ represents the similarity value between object i and object j.
 \section{Question 3}
-
+Construct a matrix to store data where each row is a protein object. The text description of the protein is stored in the first column beginning with '$>$'. The amino acid code of the protein sequence is stored in the following columns.
 \section{Question 4}
+The original $n\times m$ image matrix A could be decomposed to
+$$A = U\Sigma V^{T}$$
+where U is an $n\times n$ unitary matrix, $\Sigma$ is a diagonal $n\times m$ matrix with non-negative real numbers on the diagonal, and $V^{T}$ is an $m\times m$ unitary matrix. When performing dimension reduction using k dimensions, we reduce the dimension of U, $\Sigma$ and V by choosing the first k eigenvalues of U, $\Sigma$ and V. Thus the result matrix
+$$A_{k} = U_{k}\Sigma_{k}V^{T}_{k}$$
+where U is an $n\times k$ matrix, $\Sigma$ is a $k\times k$ matrix and V is an $k\times m$ matrix.
 \section{Question 5}
+\subsection{(a)}
+Processing data: data/mnist\_test.csv
+\\Data Size: (10000, 785)
+\\Result using Euclidean Distance:9558
+\\Result using Cosine Similarity:9614
+\\Result using Jaccard Similarity:9601
+\\Time consumed:983.6086549758911s
+\subsection{(b)}
+Processing data: data/5d\_ U\_ mnist\_test.csv
+\\Data Size: (10000, 6)
+\\Result using Euclidean Distance:6800
+\\Result using Cosine Similarity:6668
+\\Result using Jaccard Similarity:6813
+\\Time consumed:454.2277569770813s
+\\
+\\Processing data: data/5d\_U*Sigma\_mnist\_test.csv
+\\Data Size: (10000, 6)
+\\Result using Euclidean Distance:6847
+\\Result using Cosine Similarity:6687
+\\Result using Jaccard Similarity:6846
+\\Time consumed:432.4796097278595
+\\
+\\Processing data: data/10d\_U\_mnist\_test.csv
+\\Data Size: (10000, 11)
+\\Result using Euclidean Distance:8852
+\\Result using Cosine Similarity:8900
+\\Result using Jaccard Similarity:8940
+\\Time consumed:439.0083842277527s
+\\
+\\Processing data: data/10d\_U*Sigma\_mnist\_test.csv
+\\Data Size: (10000, 11)
+\\Result using Euclidean Distance:8904
+\\Result using Cosine Similarity:9020
+\\Result using Jaccard Similarity:8900
+\\Time consumed:447.56175541877747s
+\\
+\\Processing data: data/20d\_U\_mnist\_test.csv
+\\Data Size: (10000, 21)
+\\Result using Euclidean Distance:9496
+\\Result using Cosine Similarity:9534
+\\Result using Jaccard Similarity:9532
+\\Time consumed:507.8388545513153s
+\\
+\\Processing data: data/20d\_U*Sigma\_mnist\_test.csv
+\\Data Size: (10000, 21)
+\\Result using Euclidean Distance:9562
+\\Result using Cosine Similarity:9592
+\\Result using Jaccard Similarity:9554
+\\Time consumed:498.6824266910553s
+\\
+\\Processing data: data/40d\_U\_mnist\_test.csv
+\\Data Size: (10000, 41)
+\\Result using Euclidean Distance:9507
+\\Result using Cosine Similarity:9554
+\\Result using Jaccard Similarity:9561
+\\Time consumed:478.1144211292267s
+\\
+\\Processing data: data/40d\_U*Sigma\_mnist\_test.csv
+\\Data Size: (10000, 41)
+\\Result using Euclidean Distance:9630
+\\Result using Cosine Similarity:9690
+\\Result using Jaccard Similarity:9647
+\\Time consumed:482.30477929115295s
+\subsection{(c)}
+Processing data: data/7*7\_mnist\_test.csv...
+\\Data Size: (10000, 50)
+\\Result using Euclidean Distance:9378
+\\Result using Cosine Similarity:9439
+\\Result using Jaccard Similarity:9401
+\\Time consumed:513.892637014389s
+\\
+\\The code for question 5 is complied in Question5\_code.zip with readme, it is also available on my github repository: 
+\url{https://github.com/ddouup/CSCI5523_hw1}
 \end{document}
